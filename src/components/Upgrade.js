@@ -1,9 +1,11 @@
+//import '../styles/Upgrade.css'
+
 function Upgrade() {
     const firstCropPrice = 10
     const secondCropPrice = 20
     const thirdCropPrice = 30
     return (
-        <div>
+        <div className="ipwf-upgrade">
             <h2>Coût</h2>
             <ul>
             <li>Pomme : {firstCropPrice}€</li>
