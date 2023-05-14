@@ -1,16 +1,63 @@
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Container } from '@mui/material';
+import * as React from 'react';
+
+import SignUp from './SignUp';
 import Banner from './Banner';
-import Plot from './Plot';
-import Upgrade from './Upgrade';
+
 import '../styles/App.css';
 
 function App() {
-  return (
-    <div className="ipwf-app">
-      <Banner />
-      <Plot />
-      <Upgrade />
-    </div>
-  );
+	
+	const defaultMessages = {
+		severity: "info",
+		message: "Veuillez remplir le formulaire pour vous inscrire"
+	}
+	
+	// C'est un state qui va permettre de stocker les informations du snackbar et de l'afficher ou non
+	const [snackbar, setSnackbar] = React.useState({
+		open: true,
+		...defaultMessages
+	});
+
+	return (
+		<HelmetProvider>
+		<Container>
+		{renderHelmet()}
+		<Router>
+		<Routes>
+			<Route exact path="/" element={<Banner />}/>
+			<Route path="/inscription" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar} defaultMessages={defaultMessages}/>}/>
+			<Route path="/connexion" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar} defaultMessages={defaultMessages}/>}/>
+		</Routes>
+		</Router>
+		</Container>
+		</HelmetProvider>
+	);
+}
+
+function renderHelmet(){
+	return (
+		<Helmet>
+				<link
+					rel="stylesheet"
+					href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+				/>
+				<link
+					rel="stylesheet"
+					href="https://fonts.googleapis.com/icon?family=Material+Icons"
+				/>
+		</Helmet>
+	)
 }
 
 export default App;
+/*{      
+	<Banner>
+		<img src={logo} alt='La maison jungle' className='lmj-logo' />
+		<h1 className='lmj-title'>La maison jungle</h1>
+	</Banner>
+	<Cart /> 
+	<CropsList />
+}*/
