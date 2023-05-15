@@ -10,11 +10,12 @@ import '../styles/App.css';
 
 function App() {
 	
+	// Ajout du snackbar par défaut du composant App
 	const defaultMessages = {
 		severity: "info",
-		message: "Veuillez remplir le formulaire pour vous inscrire"
-	}
-	
+		message: "Bienvenue sur My Idle Farm !"
+	};
+
 	// C'est un state qui va permettre de stocker les informations du snackbar et de l'afficher ou non
 	const [snackbar, setSnackbar] = React.useState({
 		open: true,
@@ -27,9 +28,9 @@ function App() {
 		{renderHelmet()}
 		<Router>
 		<Routes>
-			<Route exact path="/" element={<Banner />}/>
-			<Route path="/inscription" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar} defaultMessages={defaultMessages}/>}/>
-			<Route path="/connexion" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar} defaultMessages={defaultMessages}/>}/>
+			<Route exact path="/" element={<Banner snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
+			<Route path="/inscription" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
+			<Route path="/connexion" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 		</Routes>
 		</Router>
 		</Container>

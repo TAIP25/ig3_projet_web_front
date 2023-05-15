@@ -11,12 +11,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import { ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import SlideTransition from '@mui/material/Slide';
 import theme from './Theme';
+import { Navigate } from 'react-router-dom';
+import GlobalSnackbar from './GlobalSnackbar';
 
 function Copyright(props) {
     return (
@@ -32,7 +31,16 @@ function Copyright(props) {
     );
 }
 
-export default function SignUp({ snackbar, setSnackbar, defaultMessages }) {
+export default function SignUp({ snackbar, setSnackbar }) {
+
+    React.useEffect(() => {
+        setSnackbar({
+            open: true,
+            severity: "info",
+            message: "Veuillez remplir le formulaire pour vous inscrire"
+        });
+    }, [setSnackbar]);
+
 
     // C'est un state qui va permettre d'afficher ou non le champ adminCode
     const [admin, setAdmin] = React.useState(false);
@@ -110,32 +118,17 @@ export default function SignUp({ snackbar, setSnackbar, defaultMessages }) {
           
     };
 
-    /*
     if(isAuthenticated){
-        return redirect('/');
+        return <Navigate to="/" />;
     }
-    */
-   
+
     return (
         /* On enveloppe notre formulaire dans le ThemeProvider*/
         <ThemeProvider theme={theme}>
     
         {/* On affiche tous les snackbar de la liste des snackbar */}
         
-        { snackbar.open && 
-        <Snackbar
-            open={true}
-            autoHideDuration={6000}
-            severity={snackbar.severity}
-            message={snackbar.message}
-            onClose={() => setSnackbar({...snackbar, open: false})}
-            TransitionComponent={SlideTransition}
-        >
-            <Alert severity={snackbar.severity} onClose={() => setSnackbar({...snackbar, open: false})}>
-                {snackbar.message}
-            </Alert>
-        </Snackbar>
-        }
+        <GlobalSnackbar snackbar={snackbar} setSnackbar={setSnackbar} />
 
 
         {/* On utilise le composant Container de Material UI pour gérer le centrage de notre formulaire */}
