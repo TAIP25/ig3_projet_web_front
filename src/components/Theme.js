@@ -26,7 +26,6 @@ const theme = createTheme({
         MuiGrid: {
             styleOverrides: {
                 root: {
-                    margin: 0,
                     '&:hover': {
                         borderColor: red[500],
                     },

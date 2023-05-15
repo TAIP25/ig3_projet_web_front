@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -37,22 +35,9 @@ export default function SignUp({ snackbar, setSnackbar }) {
         setSnackbar({
             open: true,
             severity: "info",
-            message: "Veuillez remplir le formulaire pour vous inscrire"
+            message: "Veuillez remplir le formulaire pour vous connecter"
         });
     }, [setSnackbar]);
-
-
-    // C'est un state qui va permettre d'afficher ou non le champ adminCode
-    const [admin, setAdmin] = React.useState(false);
-
-    // Fonction qui va permettre de changer la valeur du state admin
-    const handleChangeAdmin = (event) => {
-        // On va changer la valeur du state admin en fonction de la valeur de event.target.checked
-        // event est l'événement qui a été déclenché, ici le changement de valeur de la checkbox
-        // event.target est l'élément qui a déclenché l'événement, ici la checkbox
-        // event.target.checked est la valeur de la checkbox, true si elle est cochée, false sinon
-        setAdmin(event.target.checked);
-    };
 
     // State qui va permettre de savoir si la personne est connectée ou non
     const [isAuthenticated, setIsAuthenticated] = React.useState(false);
@@ -68,7 +53,7 @@ export default function SignUp({ snackbar, setSnackbar }) {
         // event.currentTarget est l'élément qui a déclenché l'événement, ici le formulaire
         const data = new FormData(event.currentTarget);
 
-        if(data.get('email') === "" || data.get('password') === "" || data.get('passwordConfirm') === ""){
+        if(data.get('email') === "" || data.get('password') === ""){
             setSnackbar({
                 open: true,
                 severity: "error",
@@ -76,27 +61,10 @@ export default function SignUp({ snackbar, setSnackbar }) {
             });
             return;
         }
-        else if(data.get('password') !== data.get('passwordConfirm')){
-            setSnackbar({
-                open: true,
-                severity: "error",
-                message: "Les mots de passe ne correspondent pas, veuillez réessayer"
-            });
-            return;
-        }
-        else if(data.get('admin') === "true"  && data.get('adminCode') === ""){
-            setSnackbar({
-                open: true,
-                severity: "error",
-                message: "Veuillez entrer le code administrateur, sinon décochez la case administrateur"
-            });
-            return;
-        }
 
-        axios.post('http://localhost:7778/auth/signup', {
+        axios.post('http://localhost:7778/auth/signin', {
             email: data.get('email'),
             password: data.get('password'),
-            adminCode: data.get('adminCode') ? data.get('adminCode') : ""
         }, { withCredentials: true })
         .then(response => {
             // On ajoute un snackbar pour indiquer à l'utilisateur la réponse du serveur
@@ -149,8 +117,9 @@ export default function SignUp({ snackbar, setSnackbar }) {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                 <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-                Inscription
+            <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 6 }}>
+                Bon retour parmi nous,<br />
+                Connectez-vous pour accéder à votre ferme.
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
@@ -173,36 +142,6 @@ export default function SignUp({ snackbar, setSnackbar }) {
                     autoComplete="new-password"
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                    required
-                    fullWidth
-                    name="passwordConfirm"
-                    label="Confirmer le mot de passe"
-                    type="password" 
-                    autoComplete="new-password"
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <FormControlLabel
-                    control={<Checkbox value={true} />}
-                    name='admin'
-                    label="Je suis un administrateur"
-                    onChange={handleChangeAdmin}
-                    />
-                </Grid>
-                { admin &&
-                    <Grid item xs={12} sm={6}>
-                    <TextField
-                    required
-                    fullWidth
-                    name="adminCode"
-                    label="Code administrateur" 
-                    type='password'
-                    autoComplete='new-password'
-                    />
-                    </Grid>
-                }
                 </Grid>
                 <Button
                 type="submit"
@@ -211,7 +150,7 @@ export default function SignUp({ snackbar, setSnackbar }) {
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
                 >
-                Inscription
+                Connexion
                 </Button>
                 <Grid container>
                 <Grid item xs>
