@@ -5,6 +5,7 @@ import * as React from 'react';
 
 import SignUp from './SignUp';
 import Banner from './Banner';
+import SignIn from './SignIn';
 
 import '../styles/App.css';
 
@@ -30,7 +31,7 @@ function App() {
 		<Routes>
 			<Route exact path="/" element={<Banner snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 			<Route path="/inscription" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
-			<Route path="/connexion" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
+			<Route path="/connexion" element={<SignIn snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 		</Routes>
 		</Router>
 		</Container>
