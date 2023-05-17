@@ -6,7 +6,6 @@ import * as React from 'react';
 import SignUp from './SignUp';
 import Banner from './Banner';
 import SignIn from './SignIn';
-
 import '../styles/App.css';
 
 function App() {

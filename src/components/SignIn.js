@@ -91,11 +91,8 @@ export default function SignUp({ snackbar, setSnackbar }) {
     }
 
     return (
-        /* On enveloppe notre formulaire dans le ThemeProvider*/
         <ThemeProvider theme={theme}>
-    
         {/* On affiche tous les snackbar de la liste des snackbar */}
-        
         <GlobalSnackbar snackbar={snackbar} setSnackbar={setSnackbar} />
 
 

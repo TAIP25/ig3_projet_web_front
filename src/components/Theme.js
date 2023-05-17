@@ -52,6 +52,10 @@ const theme = createTheme({
                 },
             },
         },
+        MuiLinearProgress: {
+            height: 10,
+            borderRadius: 5,
+        },
     },
 });
 
