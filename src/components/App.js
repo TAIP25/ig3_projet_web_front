@@ -4,8 +4,8 @@ import { Container } from '@mui/material';
 import * as React from 'react';
 
 import SignUp from './SignUp';
-import Banner from './Banner';
 import SignIn from './SignIn';
+import Game from './game/Game';
 import '../styles/App.css';
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
 		{renderHelmet()}
 		<Router>
 		<Routes>
-			<Route exact path="/" element={<Banner snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
+			<Route exact path="/" element={<Game snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 			<Route path="/inscription" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 			<Route path="/connexion" element={<SignIn snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 		</Routes>
@@ -54,11 +54,3 @@ function renderHelmet(){
 }
 
 export default App;
-/*{      
-	<Banner>
-		<img src={logo} alt='La maison jungle' className='lmj-logo' />
-		<h1 className='lmj-title'>La maison jungle</h1>
-	</Banner>
-	<Cart /> 
-	<CropsList />
-}*/

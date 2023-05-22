@@ -1,21 +1,22 @@
 import { createTheme } from '@mui/material/styles';
 import { blueGrey, deepPurple, red } from '@mui/material/colors';
 
+// TODO bien mettre en place le theme qui provient de devTheme.css
+
 const theme = createTheme({
     palette: {
-        type: 'dark',
+        type: 'dev theme',
         primary: {
-            main: blueGrey[500],
+            main: '#23a9d5',
         },
         secondary: {
-            main: deepPurple[500],
+            main: '#4b5975',
         },
         background: {
-            default: '#0a1929',
-            paper: '#424242',
+            default: '#1b2028'
         },
         text: {
-            primary: '#ffffff',
+            primary: '#ccccb5',
             secondary: '#bdbdbd',
         },
     },

@@ -1,5 +1,7 @@
 # ig3_projet_web_front
+## Crédits
 
+### "Dev theme by KDr3w" color pallet: https://www.deviantart.com/kdr3w/art/Dev-825722799
 
 
 

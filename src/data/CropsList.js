@@ -1,67 +1,51 @@
-export const plantList = [
+export const cropsList = [
 	{
-		name: 'monstera',
-		category: 'classique',
-		id: '1ed',
-		isBestSale: true,
-		light: 2,
-		water: 3
+		name: 'Navet',
+		imgName: 'turnip',
+		qty: 200,
 	},
 	{
-		name: 'ficus lyrata',
-		category: 'classique',
-		id: '2ab',
-		light: 3,
-		water: 1
+		name: 'Rose',
+		imgName: 'rose',
+		qty: 14,
 	},
 	{
-		name: 'pothos argenté',
-		category: 'classique',
-		id: '3sd',
-		light: 1,
-		water: 2
+		name: 'Comcombre',
+		imgName: 'cucumber',
+		qty: 2,
+	},
+]
+
+export const rarityList = [
+	{
+		name: 'common',
+		color: 'grey',
+		equality: 1
 	},
 	{
-		name: 'yucca',
-		category: 'classique',
-		id: '4kk',
-		light: 3,
-		water: 1
+		name: 'uncommon',
+		color: 'green',
+		equality: 5
 	},
 	{
-		name: 'olivier',
-		category: 'extérieur',
-		id: '5pl',
-		light: 3,
-		water: 1
+		name: 'rare',
+		color: 'blue',
+		equality: 25
 	},
 	{
-		name: 'géranium',
-		category: 'extérieur',
-		id: '6uo',
-		light: 2,
-		water: 2
+		name: 'epic',
+		color: 'purple',
+		equality: 100
 	},
 	{
-		name: 'basilique',
-		category: 'extérieur',
-		id: '7ie',
-		isBestSale: true,
-		light: 2,
-		water: 3
+		name: 'legendary',
+		color: 'orange',
+		equality: 500
 	},
 	{
-		name: 'aloe',
-		category: 'plante grasse',
-		id: '8fp',
-		light: 2,
-		water: 1
-	},
-	{
-		name: 'succulente',
-		category: 'plante grasse',
-		id: '9vn',
-		light: 2,
-		water: 1
+		name: 'mythic',
+		color: 'red',
+		equality: 2500
 	}
 ]
+
