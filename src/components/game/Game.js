@@ -16,9 +16,22 @@ import logo from '../../assets/radis.png';
 // imortation du style Image.css
 import '../../styles/Image.css'
 
-function onPurchase(snackbar, setSnackbar, qty) {
+function onPurchase(snackbar, setSnackbar, money, setMoney, qty) {
     const turnipCrop = cropsList.find(crop => crop.imgName === 'turnip');
-
+    if(money < 10*qty) {
+        if(snackbar.open === false){
+            setSnackbar(prevState => ({
+                ...prevState,
+                open: true,
+                severity: 'error',
+                message: 'Vous n\'avez pas assez d\'argent !',
+            }));
+        }
+        return;
+    }
+    else {
+        setMoney(money - 10*qty);
+    }
     if (turnipCrop) {
         console.log(turnipCrop.qty);
         turnipCrop.qty += qty;
@@ -55,6 +68,9 @@ export default function Game({snackbar, setSnackbar}){
 
     // Création d'un state pour l'argent du joueur
     const [money, setMoney] = React.useState(100);
+
+    // Création d'un state pour le token du joueur
+    const [token, setToken] = React.useState(100);
     
     // Création d'un state pour le stockage du joueur
     React.useEffect(() => {
@@ -68,7 +84,6 @@ export default function Game({snackbar, setSnackbar}){
       }, []);
 
     const coutDuRadis = 10;
-    const token = 100;
 
     return (
         <ThemeProvider theme={theme}>
@@ -87,7 +102,7 @@ export default function Game({snackbar, setSnackbar}){
                 <Box 
                     onMouseEnter={() => setGameInfo({message: `Cout: ${coutDuRadis}`})} 
                     onMouseLeave={() => setGameInfo({})}
-                    onClick={() => onPurchase(snackbar, setSnackbar, turnipMultiple)}
+                    onClick={() => onPurchase(snackbar, setSnackbar, money, setMoney, turnipMultiple)}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
