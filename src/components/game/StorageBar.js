@@ -20,7 +20,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 export default function StorageBar({nbCrops}) {
-    const progress = nbCrops ? nbCrops : 0.08;
+    const progress = nbCrops ? nbCrops : 0;
     const text = `${progress}/100`;
   
     return (

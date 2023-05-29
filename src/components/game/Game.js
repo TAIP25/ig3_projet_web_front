@@ -8,46 +8,13 @@ import GlobalSnackbar from '../GlobalSnackbar';
 import Plot from './Plot';
 import theme from '../Theme';
 import StorageBar from './StorageBar';
-import { cropsList } from '../../data/CropsList';
 import PurchaseButtons from './PurchaseButtons';
 import DisplayCurrency from './DisplayCurrency';
 
 import logo from '../../assets/radis.png';
 // imortation du style Image.css
 import '../../styles/Image.css'
-
-function onPurchase(snackbar, setSnackbar, money, setMoney, qty) {
-    const turnipCrop = cropsList.find(crop => crop.imgName === 'turnip');
-    if(money < 10*qty) {
-        if(snackbar.open === false){
-            setSnackbar(prevState => ({
-                ...prevState,
-                open: true,
-                severity: 'error',
-                message: 'Vous n\'avez pas assez d\'argent !',
-            }));
-        }
-        return;
-    }
-    else {
-        setMoney(money - 10*qty);
-    }
-    if (turnipCrop) {
-        console.log(turnipCrop.qty);
-        turnipCrop.qty += qty;
-    } else {
-        cropsList.push({ name: 'Naver', imgName: 'turnip', qty: qty });
-    }
-
-    if(snackbar.open === false){
-        setSnackbar(prevState => ({
-            ...prevState,
-            open: true,
-            severity: 'success',
-            message: 'Vous avez acheté un radis !',
-        }));
-    }
-}
+import axios from 'axios';
 
 // onPurchase() fait un effet bizarre, il fait apparaitre le snackbar 1 fois sur 2
 // Il faut donc le mettre dans un useEffect pour qu'il ne soit appelé qu'une seule fois
@@ -67,26 +34,128 @@ export default function Game({snackbar, setSnackbar}){
     const [turnipMultiple, setTurnipMultiple] = React.useState(1);
 
     // Création d'un state pour l'argent du joueur
-    const [money, setMoney] = React.useState(100);
+    const [money, setMoney] = React.useState(0);
 
     // Création d'un state pour le token du joueur
-    const [token, setToken] = React.useState(100);
-    
+    const [token, setToken] = React.useState(0);
+
     // Création d'un state pour le stockage du joueur
+    const [storage, setStorage] = React.useState(0);
+
+    // Création d'un localstorage pour stocker les informations des cultures
+    const cropsData = JSON.parse(localStorage.getItem('cropsData'));
+
+    // Création d'un localstorage pour stocker les informations des cultures des joueurs
+    //let userCropsData = JSON.parse(localStorage.getItem('userCropsData'));
+
+    const click = (tierActualCrop, amountActualCrop) => {
+        const bodyJson = (tierActualCrop === undefined && amountActualCrop === undefined) ? {
+            "tier": 0,
+            "amount": turnipMultiple
+        } : {
+            "tier": tierActualCrop,
+            "amount": amountActualCrop
+        };
+        axios.post('http://localhost:7778/userGame/upgrade', bodyJson, { withCredentials: true })
+        .then((response) => {
+            setSnackbar(prevState => ({
+                ...prevState,
+                open: true,
+                severity: response.data.severity,
+                message: response.data.result,
+            }));
+            setMoney(response.data.money);
+            setToken(response.data.token);
+            setStorage(response.data.amountCrop);
+            const crops = response.data.crops;
+            let userCropsData = JSON.parse(localStorage.getItem('userCropsData'));
+            if(!userCropsData){
+                userCropsData = {};
+            }
+            crops.forEach(crop => {
+                const { cropTier, cropPNGName, userCropQuantity } = crop;
+                userCropsData[parseInt(cropTier)] = { cropPNGName, cropTier, userCropQuantity };
+            })
+            for(let i = 1; i < 21; i++){
+                if(!userCropsData[i]){
+                    userCropsData[i] = { cropPNGName: 'empty', cropTier: i, userCropQuantity: 0 };
+                }
+            }
+            localStorage.setItem('userCropsData', JSON.stringify(userCropsData));
+        });
+    }
+
+    // Création d'un state pour le stockage du joueur lorsqu'il arrive sur la page
+    React.useEffect(() => {
+        axios.get('http://localhost:7778/crop', { withCredentials: true })
+        .then((response) => {
+            localStorage.setItem('cropsData', JSON.stringify(response.data.crops));
+        });
+
+        axios.put('http://localhost:7778/userGame/', null, { withCredentials: true })
+        .then((response) => {
+            setSnackbar(prevState => ({
+                ...prevState,
+                open: true,
+                severity: response.data.severity,
+                message: response.data.result,
+            }));
+            setMoney(response.data.money);
+            setToken(response.data.token);
+            setStorage(response.data.amountCrop);
+        })
+        .catch((error) => {
+            if(error.response.status === 401){
+                setSnackbar(prevState => ({
+                    ...prevState,
+                    open: true,
+                    severity: 'error',
+                    message: 'Vous n\'êtes pas connecté !',
+                }));
+                // Redirection vers la page de connexion
+                window.location.href = '/connexion';
+            }
+        });
+    }, [setSnackbar]);
+
+    // Création d'un intervalle pour mettre à jour le stockage du joueur toutes les 6 secondes
     React.useEffect(() => {
         const interval = setInterval(() => {
-          setMoney((prevMoney) => prevMoney + 100); // Augmentation de l'argent
-        }, 2000); // Délai de 10 secondes (10000 millisecondes)
-      
+            axios.put('http://localhost:7778/userGame/', null, { withCredentials: true })
+            .then((response) => {
+                setSnackbar(prevState => ({
+                    ...prevState,
+                    open: true,
+                    severity: response.data.severity,
+                    message: response.data.result,
+                }));
+                setMoney(response.data.money);
+                setToken(response.data.token);
+                setStorage(response.data.amountCrop);
+            })
+            .catch((error) => {
+                if(error.response.status === 401){
+                    setSnackbar(prevState => ({
+                        ...prevState,
+                        open: true,
+                        severity: 'error',
+                        message: 'Vous n\'êtes pas connecté !',
+                    }));
+                    // Redirection vers la page de connexion
+                    setTimeout(() => {
+                        window.location.href = '/connexion';
+                    }, 2000);
+                }
+            });
+        }, 6000);
+        
         return () => {
-          clearInterval(interval); // Nettoyage de l'intervalle lors du démontage du composant
+            clearInterval(interval); // Nettoyage de l'intervalle lors du démontage du composant
         };
-      }, []);
-
-    const coutDuRadis = 10;
+    }, [setSnackbar]);
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>   
         <Grid container>
             <Container>
             <CssBaseline />
@@ -100,9 +169,9 @@ export default function Game({snackbar, setSnackbar}){
                 }}
             >
                 <Box 
-                    onMouseEnter={() => setGameInfo({message: `Cout: ${coutDuRadis}`})} 
+                    onMouseEnter={() => setGameInfo({message: `Money: ${cropsData[0].cropMoneyPrice}, Token: ${cropsData[0].cropTokenPrice}`})} 
                     onMouseLeave={() => setGameInfo({})}
-                    onClick={() => onPurchase(snackbar, setSnackbar, money, setMoney, turnipMultiple)}
+                    onClick={() => click()}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -124,11 +193,19 @@ export default function Game({snackbar, setSnackbar}){
                 }}>
                     {gameInfo.message ? gameInfo.message : "invisible message"}
                 </Typography>
-            <StorageBar nbCrops={0.001} />
+            <StorageBar nbCrops={storage} />
             <Box align='right' sx={{ 
                 marginTop: 10,
             }}>
-                <Plot gameInfo={gameInfo} setGameInfo={setGameInfo} />
+                <Plot 
+                    setGameInfo={setGameInfo} 
+                    setSnackbar={setSnackbar}
+                    setMoney={setMoney}
+                    setToken={setToken}
+                    setStorage={setStorage}
+                    click={click}
+
+                />
             </Box>
             </Container>
         </Grid>

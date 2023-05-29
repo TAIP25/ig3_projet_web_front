@@ -1,21 +1,3 @@
-export const cropsList = [
-	{
-		name: 'Navet',
-		imgName: 'turnip',
-		qty: 200,
-	},
-	{
-		name: 'Rose',
-		imgName: 'rose',
-		qty: 14,
-	},
-	{
-		name: 'Comcombre',
-		imgName: 'cucumber',
-		qty: 2,
-	},
-]
-
 export const rarityList = [
 	{
 		name: 'common',

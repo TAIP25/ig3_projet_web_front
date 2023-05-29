@@ -39,6 +39,18 @@ export default function SignUp({ snackbar, setSnackbar }) {
         });
     }, [setSnackbar]);
 
+    /*
+    React.useEffect(() => {
+        if(snackbar.open === false){
+            setSnackbar({
+                open: true,
+                severity: "info",
+                message: "Veuillez remplir le formulaire pour vous connecter"
+            });
+        }
+    }, [setSnackbar]);
+    */
+
     // State qui va permettre de savoir si la personne est connectée ou non
     const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
