@@ -55,8 +55,11 @@ export default function Plot({ setGameInfo, setSnackbar, setMoney, setToken, set
                         padding: '10px'
                     }} 
                     onMouseEnter={() => {
+                        const cropsData = JSON.parse(localStorage.getItem('cropsData'));
+                        const cropTier = cropsData.find(cropData => cropData.cropPNGName === crop.name).cropTier
+                        const nextCropInfo = cropsData.find(cropData => cropTier + 1 === cropData.cropTier);
                         const newGameInfo = {
-                            message: `Coût d'amélioration: ${crop.name} !`,
+                            message: `Cout pour l'upgrade = Money: ${nextCropInfo.cropMoneyPrice*parseInt(crop.equality)}€, Token: ${nextCropInfo.cropTokenPrice*parseInt(crop.equality)}$`,
                         };
                         setGameInfo(newGameInfo);
                     }}
@@ -65,7 +68,6 @@ export default function Plot({ setGameInfo, setSnackbar, setMoney, setToken, set
                         setGameInfo(newGameInfo);
                     }}
                     onClick={() => {
-                        console.log(crop);
                         const tierActualCrop = parseInt(crop.tier);
                         const amountActualCrop = parseInt(crop.equality);
                         click(tierActualCrop, amountActualCrop);

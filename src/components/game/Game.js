@@ -169,7 +169,7 @@ export default function Game({snackbar, setSnackbar}){
                 }}
             >
                 <Box 
-                    onMouseEnter={() => setGameInfo({message: `Money: ${cropsData[0].cropMoneyPrice}, Token: ${cropsData[0].cropTokenPrice}`})} 
+                    onMouseEnter={() => setGameInfo({message: `Cout pour l'achat = Money: ${cropsData[0].cropMoneyPrice*turnipMultiple}€, Token: ${cropsData[0].cropTokenPrice*turnipMultiple}$`})}
                     onMouseLeave={() => setGameInfo({})}
                     onClick={() => click()}
                     sx={{
