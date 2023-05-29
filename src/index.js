@@ -5,9 +5,8 @@ import App from './components/App';
 
 import './styles/index.css';
 
+// Import les variables d'environnement
+//require('dotenv').config();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-
-/*<React.StrictMode>
-    <App />
-  </React.StrictMode>*/

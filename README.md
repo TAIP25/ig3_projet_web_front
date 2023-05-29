@@ -1,9 +1,7 @@
 # ig3_projet_web_front
 
 ## Description
-Ceci est le front-end dans le cadre d'un projet web en IG3 de à Polytech Montpellier.
-Ici se trouve le back-end: https://github.com/TAIP25/ig3_projet_web_back
-
+Ce projet est un projet seul. Il s'agit d'un projet en 3ème année de Polytech Montpellier en Informatique et Gestion. Ce projet est un projet de développement d'une application web. L'application web est un jeu de gestion de ferme. Le projet est divisé en deux parties, une partie front et une partie back. Cette partie est la partie front. La partie back est disponible [ici](https://github.com/TAIP25/ig3_projet_web_back)
 
 ## Crédits
 

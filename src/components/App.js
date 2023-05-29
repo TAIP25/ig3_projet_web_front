@@ -9,7 +9,6 @@ import Game from './game/Game';
 import '../styles/App.css';
 
 function App() {
-	
 	// Ajout du snackbar par défaut du composant App
 	const defaultMessages = {
 		severity: "info",

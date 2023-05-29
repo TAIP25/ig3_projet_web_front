@@ -56,7 +56,7 @@ export default function Game({snackbar, setSnackbar}){
             "tier": tierActualCrop,
             "amount": amountActualCrop
         };
-        axios.post('http://localhost:7778/userGame/upgrade', bodyJson, { withCredentials: true })
+        axios.post(`${process.env.REACT_APP_API_URL}/userGame/upgrade`, bodyJson, { withCredentials: true })
         .then((response) => {
             setSnackbar(prevState => ({
                 ...prevState,
@@ -87,12 +87,12 @@ export default function Game({snackbar, setSnackbar}){
 
     // Création d'un state pour le stockage du joueur lorsqu'il arrive sur la page
     React.useEffect(() => {
-        axios.get('http://localhost:7778/crop', { withCredentials: true })
+        axios.get(`${process.env.REACT_APP_API_URL}/crop`.toString(), { withCredentials: true })
         .then((response) => {
             localStorage.setItem('cropsData', JSON.stringify(response.data.crops));
         });
 
-        axios.put('http://localhost:7778/userGame/', null, { withCredentials: true })
+        axios.put(`${process.env.REACT_APP_API_URL}/userGame/`, null, { withCredentials: true })
         .then((response) => {
             setSnackbar(prevState => ({
                 ...prevState,
@@ -121,7 +121,7 @@ export default function Game({snackbar, setSnackbar}){
     // Création d'un intervalle pour mettre à jour le stockage du joueur toutes les 6 secondes
     React.useEffect(() => {
         const interval = setInterval(() => {
-            axios.put('http://localhost:7778/userGame/', null, { withCredentials: true })
+            axios.put(`${process.env.REACT_APP_API_URL}/userGame/`, null, { withCredentials: true })
             .then((response) => {
                 setSnackbar(prevState => ({
                     ...prevState,

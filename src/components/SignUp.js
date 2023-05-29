@@ -21,7 +21,7 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="http://localhost:3000/">
+            <Link color="inherit" href={`${process.env.REACT_APP_FRONT_URL}`}>
                 My Idle Farm
             </Link>
             {' '}
@@ -93,7 +93,7 @@ export default function SignUp({ snackbar, setSnackbar }) {
             return;
         }
 
-        axios.post('http://localhost:7778/auth/signup', {
+        axios.post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
             email: data.get('email'),
             password: data.get('password'),
             adminCode: data.get('adminCode') ? data.get('adminCode') : ""
