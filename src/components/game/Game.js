@@ -42,6 +42,13 @@ export default function Game({snackbar, setSnackbar}){
     // Création d'un state pour le stockage du joueur
     const [storage, setStorage] = React.useState(0);
 
+    // Création d'un state pour l'argent gagné par 6 secondes
+    const [moneyPerSecond, setMoneyPerSecond] = React.useState(0);
+
+    // Création d'un state pour les tokens gagnés par 6 secondes
+    const [tokenPerSecond, setTokenPerSecond] = React.useState(0);
+
+
     // Création d'un localstorage pour stocker les informations des cultures
     const cropsData = JSON.parse(localStorage.getItem('cropsData'));
 
@@ -132,6 +139,8 @@ export default function Game({snackbar, setSnackbar}){
                 setMoney(response.data.money);
                 setToken(response.data.token);
                 setStorage(response.data.amountCrop);
+                setMoneyPerSecond(response.data.moneyEarnedPerTick);
+                setTokenPerSecond(response.data.tokenEarnedPerTick);
             })
             .catch((error) => {
                 if(error.response.status === 401){
@@ -184,7 +193,7 @@ export default function Game({snackbar, setSnackbar}){
                     Clicker <br />
                     Turnip
                 </Typography>
-                < DisplayCurrency money={money} token={token} />
+                < DisplayCurrency money={money} token={token} moneyPerSecond={moneyPerSecond} tokenPerSecond={tokenPerSecond} />
                 <PurchaseButtons turnipMultiple={turnipMultiple} setTurnipMultiple={setTurnipMultiple} />
             </Box>
                 <Typography component="h1" variant="h5" sx={{

@@ -99,6 +99,7 @@ export default function SignUp({ snackbar, setSnackbar }) {
             adminCode: data.get('adminCode') ? data.get('adminCode') : ""
         }, { withCredentials: true })
         .then(response => {
+            console.log(response);
             // On ajoute un snackbar pour indiquer à l'utilisateur la réponse du serveur
             setSnackbar({
                 open: true, 

@@ -15,6 +15,8 @@ import theme from './Theme';
 import { Navigate } from 'react-router-dom';
 import GlobalSnackbar from './GlobalSnackbar';
 
+//import { decodeToken } from 'react-jwt';
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -79,6 +81,11 @@ export default function SignUp({ snackbar, setSnackbar }) {
             password: data.get('password'),
         }, { withCredentials: true })
         .then(response => {
+            // On decode le token pour récupérer les informations de l'utilisateur
+            console.log(response);
+            //const decodedToken = decodeToken(response.cookie.authcookie);
+            //console.log(decodedToken);
+
             // On ajoute un snackbar pour indiquer à l'utilisateur la réponse du serveur
             setSnackbar({
                 open: true, 
@@ -162,12 +169,12 @@ export default function SignUp({ snackbar, setSnackbar }) {
                 Connexion
                 </Button>
                 <Grid container>
-                <Grid item xs>
-                    {/* TODO : Mettre un lien vers la page de récupération de mot de passe */}
+                {/*<Grid item xs>
+                    {/* TODO : Mettre un lien vers la page de récupération de mot de passe *//*}
                     <Link href="#" variant="body2">
                     Mot de passe oublié ?
                     </Link>
-                </Grid>
+                </Grid>*/}
                 <Grid item>
                     <Link href="/inscription" variant="body2">
                     Pas encore de compte ? Inscrivez-vous.

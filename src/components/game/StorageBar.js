@@ -21,12 +21,15 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 export default function StorageBar({nbCrops}) {
     const progress = nbCrops ? nbCrops : 0;
-    const text = `${progress}/100`;
+    let text = `${progress}/100`;
+    if(progress >= 100){
+        text = `${progress}/1000`;
+    }
   
     return (
       <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-          <BorderLinearProgress variant="determinate" value={progress} sx={{ flexGrow: 1 }} />
+          <BorderLinearProgress variant="determinate" value={progress/10} sx={{ flexGrow: 1 }} />
           <Typography variant="body2" sx={{ ml: 1 }}>{text}</Typography>
         </Box>
       </ThemeProvider>

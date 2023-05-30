@@ -6,6 +6,7 @@ import * as React from 'react';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import Game from './game/Game';
+import AdminPanel from './AdminPanel';
 import '../styles/App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
 			<Route exact path="/" element={<Game snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 			<Route path="/inscription" element={<SignUp snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 			<Route path="/connexion" element={<SignIn snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
+			<Route path="/panel" element={<AdminPanel snackbar={snackbar} setSnackbar={setSnackbar}/>}/>
 		</Routes>
 		</Router>
 		</Container>
