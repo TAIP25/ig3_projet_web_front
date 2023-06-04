@@ -71,17 +71,21 @@ export default function Game({snackbar, setSnackbar}){
     }
 
     function getCropAndNextCrop(cropPNGName){
-        let currentCrop = cropsData.find(crop => crop.cropPNGName === cropPNGName);
-        if(currentCrop && currentCrop.cropPNGName !== 'turnip'){
-            let previousCrop = cropsData.find(crop => crop.cropTier === currentCrop.cropTier - 1);
-            if(previousCrop){
-                return [previousCrop, currentCrop];
+        if(cropsData){
+            let currentCrop = cropsData.find(crop => crop.cropPNGName === cropPNGName);
+            if(currentCrop){
+                if(currentCrop.cropPNGName !== 'turnip'){
+                    let previousCrop = cropsData.find(crop => crop.cropTier === currentCrop.cropTier - 1);
+                    if(previousCrop){
+                        return [previousCrop, currentCrop];
+                    }
+                }
+                else if(currentCrop.cropPNGName === 'turnip'){
+                    return [currentCrop, undefined];
+                }
             }
         }
-        else if(currentCrop && currentCrop.cropPNGName === 'turnip'){
-            return [currentCrop, undefined];
-        }
-        return [];
+        return [undefined, undefined];
     }
 
     const click = (tierActualCrop, amountActualCrop) => {
@@ -118,7 +122,7 @@ export default function Game({snackbar, setSnackbar}){
                 }
             }
             localStorage.setItem('userCropsData', JSON.stringify(userCropsData));
-        });
+        })
     }
 
     const disconnect = () => {

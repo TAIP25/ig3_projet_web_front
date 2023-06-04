@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from '@mui/material';
 
 import { rarityList } from '../../data/CropsList';
 
-export default function Plot({ setGameInfo, setSnackbar, setMoney, setToken, setStorage, click }) {
+export default function Plot({ setGameInfo, click, tier, amount, equality }) {
 
     // Cette fonction permet de générer une liste de crops avec leur couleur
     // Chaque couleur correspond à une rareté il même correspond à un nombre de crops
