@@ -100,6 +100,14 @@ export default function SignUp({ snackbar, setSnackbar }) {
         }, { withCredentials: true })
         .then(response => {
             console.log(response);
+            // Efface le local storage et les cookies
+            localStorage.clear();
+            document.cookie = "authcookie=; path=/; max-age=-1";
+            document.cookie = "isAdmin=; path=/; max-age=-1";
+            if(response.data.severity === "success"){
+                document.cookie = `authcookie=${response.data.token}; path=/; max-age=${60*60*24*7}`;
+                document.cookie = `isAdmin=${response.data.admin}; path=/; max-age=${60*60*24*7}`;
+            }
             // On ajoute un snackbar pour indiquer à l'utilisateur la réponse du serveur
             setSnackbar({
                 open: true, 

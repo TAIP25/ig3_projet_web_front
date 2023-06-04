@@ -1,4 +1,4 @@
-import { Box, Grid} from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
 import { rarityList } from '../../data/CropsList';
 
@@ -59,7 +59,11 @@ export default function Plot({ setGameInfo, setSnackbar, setMoney, setToken, set
                         const cropTier = cropsData.find(cropData => cropData.cropPNGName === crop.name).cropTier
                         const nextCropInfo = cropsData.find(cropData => cropTier + 1 === cropData.cropTier);
                         const newGameInfo = {
-                            message: `Cout pour l'upgrade = Money: ${nextCropInfo.cropMoneyPrice*parseInt(crop.equality)}€, Token: ${nextCropInfo.cropTokenPrice*parseInt(crop.equality)}$`,
+                            message: 'upgrade',
+                            money: nextCropInfo.cropMoneyPrice*parseInt(crop.equality),
+                            token: nextCropInfo.cropTokenPrice*parseInt(crop.equality),
+                            equality: parseInt(crop.equality),
+                            crop: nextCropInfo.cropPNGName,
                         };
                         setGameInfo(newGameInfo);
                     }}
@@ -90,6 +94,9 @@ export default function Plot({ setGameInfo, setSnackbar, setMoney, setToken, set
                                 borderRadius: '10%',
                             }}
                         />
+                        <Typography variant="body2" sx={{ position: 'absolute', bottom: 0, right: 5 }}>
+                            {crop.equality}
+                        </Typography>
                     </Box>
                 </Grid>
             ))}
@@ -97,42 +104,3 @@ export default function Plot({ setGameInfo, setSnackbar, setMoney, setToken, set
         </div>
     );
 }
-
-/*
-export default function Plot() {
-
-    return (
-        <div>
-        <Grid container spacing={5}>
-            {cropsList.map((crop, index) => (
-            <Grid item key={index}>
-                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                <img
-                    height={64}
-                    width={64}
-                    src={require(`../assets/uniqueCrops/${crop.imgName}1.png`)}
-                    alt={crop.name}
-                />
-                {rarityList.map((rarity, rarityIndex) => (
-                    <div
-                        key={rarityIndex}
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            border: `2px solid ${colorBorder(crop.qty)}`,
-                            borderRadius: '10%',
-                            pointerEvents: 'none',
-                            zIndex: rarityList.length - rarityIndex,
-                        }}
-                    />
-                ))}
-                </div>
-            </Grid>
-            ))}
-        </Grid>
-        </div>
-    );
-}*/

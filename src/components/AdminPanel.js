@@ -1,11 +1,9 @@
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-
 import axios from "axios";
 import React from "react";
 
 import theme from './Theme';
-import { Button, Grid, Box } from '@mui/material';
+import { ThemeProvider, CssBaseline, Grid, Box, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
@@ -78,55 +76,41 @@ function AdminPanel({ setSnackbar }) {
 
     return (
         <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Grid container spacing={2} sx={{ mg: '20px' }}>
+            <CssBaseline />
+            <Grid container spacing={2} sx={{ mg: '20px' }}>
             <Grid item xs={12}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h1>Admin Panel</h1>
+                <Button variant='outlined' size='small' color='info' sx={{ ml:'auto', mt:'25px' }} onClick={() => window.location.href = '/'}>retour</Button>
+                </Box>
             </Grid>
             <Grid item xs={12}>
-                <Box style={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    padding: '10px',
-                    justifyContent: 'space-between',
-                }}>
-                    <h4 style={{ marginRight: '200px' }}>userId</h4>
-                    <h4>Email</h4>
-                    <h4>Admin</h4>
-                    <h4>Créé le</h4>
-                    <h4>Supprimer</h4>
-                </Box>
+                <TableContainer>
+                <Table>
+                    <TableHead>
+                    <TableRow>
+                        <TableCell>userId</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Admin</TableCell>
+                        <TableCell>Créé le</TableCell>
+                        <TableCell>Supprimer</TableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {users !== [] && users.map((user) => (
+                        <TableRow key={user.userId}>
+                        <TableCell>{user.userId}</TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell>{user.isAdmin.toString()}</TableCell>
+                        <TableCell>{user.userCreatedAt}</TableCell>
+                        <TableCell><Button variant="outlined" type="submit" size="small" color="error" onClick={() => handleDelete(user.userId)}><DeleteIcon /></Button></TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+                </TableContainer>
             </Grid>
-            {users !== [] &&
-            users.map((user) => (
-                <Grid item xs={12} key={user.userId} style={
-                    {
-                        border: '1px solid #23a9d5',
-                        padding: '10px',
-                        marginBottom: '10px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                    }
-                }>
-                <Box style={{ 
-                        position: 'relative', 
-                        width: '100%', 
-                        height: '100%', 
-                        display: 'flex',
-                        padding: '10px',
-                        justifyContent: 'space-between',
-                    }}>
-                    <p>{user.userId}</p>
-                    <p>{user.email}</p>
-                    <p>{user.isAdmin.toString()}</p>
-                    <p>{user.userCreatedAt}</p>
-                </Box>
-                <Button variant="contained" type="submit"  size="small" color="primary" style={{ marginLeft: '150px' }} onClick={() => handleDelete(user.userId)}> Supprimer </Button>
-                </Grid>
-            ))}
-        </Grid>
+            </Grid>
         </ThemeProvider>
     );
 }

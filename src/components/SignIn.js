@@ -81,11 +81,15 @@ export default function SignUp({ snackbar, setSnackbar }) {
             password: data.get('password'),
         }, { withCredentials: true })
         .then(response => {
-            // On decode le token pour récupérer les informations de l'utilisateur
             console.log(response);
-            //const decodedToken = decodeToken(response.cookie.authcookie);
-            //console.log(decodedToken);
-
+            // Efface le local storage et les cookies
+            localStorage.clear();
+            document.cookie = "authcookie=; path=/; max-age=-1";
+            document.cookie = "isAdmin=; path=/; max-age=-1";
+            if(response.data.severity === "success"){
+                document.cookie = `authcookie=${response.data.token}; path=/; max-age=${60*60*24*7}`;
+                document.cookie = `isAdmin=${response.data.admin}; path=/; max-age=${60*60*24*7}`;
+            }
             // On ajoute un snackbar pour indiquer à l'utilisateur la réponse du serveur
             setSnackbar({
                 open: true, 
