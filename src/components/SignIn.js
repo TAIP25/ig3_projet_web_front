@@ -75,8 +75,8 @@ export default function SignUp({ snackbar, setSnackbar }) {
             document.cookie = "authcookie=; path=/; max-age=-1";
             document.cookie = "isAdmin=; path=/; max-age=-1";
             if(response.data.severity === "success"){
-                document.cookie = `authcookie=${response.data.token}; path=/; max-age=${60*60*24*7}; samesite=lax;`;
-                document.cookie = `isAdmin=${response.data.admin}; path=/; max-age=${60*60*24*7}; samesite=lax;`;
+                document.cookie = `authcookie=${response.data.token}; path=/; max-age=${60*60*24*7}; domain=${process.env.REACT_APP_FRONT_URL};`;
+                document.cookie = `isAdmin=${response.data.admin}; path=/; max-age=${60*60*24*7}; domain=${process.env.REACT_APP_FRONT_URL};`;
             }
             // On ajoute un snackbar pour indiquer à l'utilisateur la réponse du serveur
             setSnackbar({
