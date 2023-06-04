@@ -41,18 +41,6 @@ export default function SignUp({ snackbar, setSnackbar }) {
         });
     }, [setSnackbar]);
 
-    /*
-    React.useEffect(() => {
-        if(snackbar.open === false){
-            setSnackbar({
-                open: true,
-                severity: "info",
-                message: "Veuillez remplir le formulaire pour vous connecter"
-            });
-        }
-    }, [setSnackbar]);
-    */
-
     // State qui va permettre de savoir si la personne est connectée ou non
     const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
@@ -87,8 +75,8 @@ export default function SignUp({ snackbar, setSnackbar }) {
             document.cookie = "authcookie=; path=/; max-age=-1";
             document.cookie = "isAdmin=; path=/; max-age=-1";
             if(response.data.severity === "success"){
-                document.cookie = `authcookie=${response.data.token}; path=/; max-age=${60*60*24*7}`;
-                document.cookie = `isAdmin=${response.data.admin}; path=/; max-age=${60*60*24*7}`;
+                document.cookie = `authcookie=${response.data.token}; path=/; max-age=${60*60*24*7}; samesite=lax; secure=true; httponly=true`
+                document.cookie = `isAdmin=${response.data.admin}; path=/; max-age=${60*60*24*7}; samesite=lax; secure=true; httponly=true`;
             }
             // On ajoute un snackbar pour indiquer à l'utilisateur la réponse du serveur
             setSnackbar({
