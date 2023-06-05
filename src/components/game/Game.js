@@ -61,6 +61,7 @@ export default function Game({snackbar, setSnackbar}){
 
     function getCookieValue(name) {
         const cookies = document.cookie.split(';');
+        console.log(cookies);
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
             if (cookie.startsWith(name + '=')) {
@@ -127,7 +128,6 @@ export default function Game({snackbar, setSnackbar}){
 
     const disconnect = () => {
         localStorage.clear();
-        document.cookie = "authcookie=; path=/; max-age=-1";
         document.cookie = "isAdmin=; path=/; max-age=-1";
         // Redirection vers la page de connexion
         window.location.href = '/connexion';
@@ -225,6 +225,9 @@ export default function Game({snackbar, setSnackbar}){
             clearInterval(interval);
         }
     }, [progressBar, setSnackbar]);
+
+    console.log(getCookieValue('isAdmin'))
+    console.log(getCookieValue('authcookie'))
 
     return (
         <ThemeProvider theme={theme}>   
