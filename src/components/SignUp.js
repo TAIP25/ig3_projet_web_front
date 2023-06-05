@@ -101,6 +101,7 @@ export default function SignUp({ snackbar, setSnackbar }) {
         .then(response => {
             // Efface le local storage et les cookies
             localStorage.clear();
+            // On efface le cookie isAdmin
             document.cookie = "isAdmin=; path=/; max-age=-1";
             // On ajoute le token dans le local storage
             if(response.data.severity === "success"){
