@@ -67,7 +67,7 @@ export default function SignUp({ snackbar, setSnackbar }) {
         axios.post(`${process.env.REACT_APP_API_URL}/auth/signin`, {
             email: data.get('email'),
             password: data.get('password'),
-        }, { withCredentials: true })
+        })
         .then(response => {
             // Efface le local storage et les cookies
             localStorage.clear();
