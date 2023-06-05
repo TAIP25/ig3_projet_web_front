@@ -101,11 +101,10 @@ export default function SignUp({ snackbar, setSnackbar }) {
         .then(response => {
             // Efface le local storage et les cookies
             localStorage.clear();
-            document.cookie = "authcookie=; path=/; max-age=-1";
             document.cookie = "isAdmin=; path=/; max-age=-1";
+            // On ajoute le token dans le local storage
             if(response.data.severity === "success"){
                 let expirationDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-                document.cookie = `authcookie=${response.data.token}; path=/; expires=${expirationDate.toUTCString()} domain=${process.env.REACT_APP_FRONT_URL}`;
                 document.cookie = `isAdmin=${response.data.admin}; path=/; expires=${expirationDate.toUTCString()} domain=${process.env.REACT_APP_FRONT_URL}`;
             }
             // On ajoute un snackbar pour indiquer à l'utilisateur la réponse du serveur
