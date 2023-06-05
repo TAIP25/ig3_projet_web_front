@@ -226,9 +226,6 @@ export default function Game({snackbar, setSnackbar}){
         }
     }, [progressBar, setSnackbar]);
 
-    console.log(getCookieValue('isAdmin'))
-    console.log(getCookieValue('authcookie'))
-
     return (
         <ThemeProvider theme={theme}>   
         <Grid container>
